@@ -2,68 +2,114 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>3D啊啊啊立方体旋转动画</title>
-<style type="text/css">
-@keyframes rotate{
-      0%{transform:rotateX(0deg) rotateY(0deg);}
-      100%{transform:rotateX(360deg) rotateY(360deg);}
-      }
-@-webkit-keyframes rotate{
-      0%{transform:rotateX(0deg) rotateY(0deg);}
-      100%{transform:rotateX(360deg) rotateY(360deg);}
-      }
-html{background:linear-gradient(#ff0 0%,#3F9 80%);height:100%;}
-.wrap{margin:150px auto;perspective:1000px;width:200px;height:200px;}
-.cube{margin:auto;width:200px;height:200px;position:relative;transform-style:preserve-3d;animation:rotate 20s infinite linear;}
-.cube > div{width:100%;height:100%;position:absolute;background-color:#333;opacity:.9;border:1px solid #fff;color:#fff;font-size:36px;font-family:"微软雅黑";font-weight:bold;text-align:center;line-height:200px;transition:transform .2s ease-in;-webkit-transition:transform .2s ease-in;}
-.cube > span{display:block;width:100px;height:100px;border:1px solid #000;background-color:#999;position:absolute;top:50px;left:50px;}
-.cube > span img{width:100px;height:100px;}
-.cube .out-front{transform:translateZ(100px);-moz-transform:translateZ(100px);-webkit-transform:translateZ(100px);}
-.cube .out-back{transform:translateZ(-100px) rotateY(180deg);-moz-transform:translateZ(-100px) rotateY(180deg);-webkit-transform:translateZ(-100px) rotateY(180deg)}
-.cube .out-left{transform:translateX(-100px) rotateY(-90deg);-moz-transform:translateX(-100px) rotateY(-90deg);-webkit-transform:translateX(-100px) rotateY(-90deg);}
-.cube .out-right{transform:translateX(100px) rotateY(90deg);-moz-transform:translateX(100px) rotateY(90deg);-webkit-transform:translateX(100px) rotateY(90deg);}
-.cube .out-top{transform:translateY(-100px) rotateX(90deg);-moz-transform:translateY(-100px) rotateX(90deg);-webkit-transform:translateY(-100px) rotateX(90deg);}
-.cube .out-bottom{transform:translateY(100px) rotateX(-90deg);-moz-transform:translateY(100px) rotateX(-90deg);-webkit-transform:translateY(100px) rotateX(-90deg);}
-
-.cube .in-front{transform:translateZ(50px);-moz-transform:translateZ(50px);-webkit-transform:translateZ(50px);}
-.cube .in-back{transform:translateZ(-50px) rotateY(180deg);-moz-transform:translateZ(-50px) rotateY(180deg);-webkit-transform:translateZ(-50px) rotateY(180deg)}
-.cube .in-left{transform:translateX(-50px) rotateY(-90deg);-moz-transform:translateX(-50px) rotateY(-90deg);-webkit-transform:translateX(-50px) rotateY(-90deg);}
-.cube .in-right{transform:translateX(50px) rotateY(90deg);-moz-transform:translateX(50px) rotateY(90deg);-webkit-transform:translateX(50px) rotateY(90deg);}
-.cube .in-top{transform:translateY(-50px) rotateX(90deg);-moz-transform:translateY(-50px) rotateX(90deg);-webkit-transform:translateY(-50px) rotateX(90deg);}
-.cube .in-bottom{transform:translateY(50px) rotateX(-90deg);-moz-transform:translateY(50px) rotateX(-90deg);-webkit-transform:translateY(50px) rotateX(-90deg);}
-
-.wrap:hover .cube .out-front{transform:translateZ(200px);-moz-transform:translateZ(200px);-webkit-transform:translateZ(200px); background: #f00;}
-.wrap:hover .cube .out-back{transform:translateZ(-200px) rotateY(180deg);-moz-transform:translateZ(-200px) rotateY(180deg);-webkit-transform:translateZ(-200px) rotateY(180deg)}
-.wrap:hover .cube .out-left{transform:translateX(-200px) rotateY(-90deg);-moz-transform:translateX(-200px) rotateY(-90deg);-webkit-transform:translateX(-200px) rotateY(-90deg);}
-.wrap:hover .cube .out-right{transform:translateX(200px) rotateY(90deg);-moz-transform:translateX(200px) rotateY(90deg);-webkit-transform:translateX(200px) rotateY(90deg);}
-.wrap:hover .cube .out-top{transform:translateY(-200px) rotateX(90deg);-moz-transform:translateY(-200px) rotateX(90deg);-webkit-transform:translateY(-200px) rotateX(90deg);}
-.wrap:hover .cube .out-bottom{transform:translateY(200px) rotateX(-90deg);-moz-transform:translateY(200px) rotateX(-90deg);-webkit-transform:translateY(200px) rotateX(-90deg);}
-p{
-      text-align: center;
-      line-height: 100px;
-}
-.inner-p{
-      line-height: 50px;
-}
+<meta name="author" content="" />
+<meta name="copyright" content="" />
+<title>可拖拽的立方体</title>
+<style>
+	*{ 
+		padding: 0; 
+		margin: 0; 
+	}
+	body{
+		background: #000;
+	}
+	#content{
+		width: 200px;
+		height: 200px;
+		background: #ccc;
+		position: absolute;
+		top:0;
+		right:0;
+		bottom:0;
+		left:0;
+		margin:auto;
+		transform-style: preserve-3d;
+		transform:perspective(800px);
+	}
+	#content div{ 
+		position:absolute;
+		left:0;
+		top:0;
+		width:198px; 
+		height:198px; 
+		border:1px solid #000; 
+		line-height:198px; 
+		text-align:center; 
+		background:rgba(255,255,255,0.7); 
+	}
+	#content .front{ transform:translateZ(100px);}
+	#content .back{ transform:translateZ(-100px);}
+	#content .left{ transform: rotateY(-90deg) translateZ(100px);}
+	#content .right{ transform: rotateY(+90deg) translateZ(100px);}
+	#content .top{ transform: rotateX(90deg) translateZ(100px);}
+	#content .bottom{ transform: rotateX(-90deg) translateZ(100px);}
 </style>
 </head>
 
 <body>
-<div class="wrap">
-      <div class="cube">
-            <div class="out-front"><p>1</p></div>
-            <div class="out-back"><p>2</p></div>
-            <div class="out-left"><p>3</p></div>
-            <div class="out-right"><p>4</p></div>
-            <div class="out-top"><p>5</p></div>
-            <div class="out-bottom"><p>6</p></div>
-            <span class="in-front"><p class="inner-p">1</p></span>
-            <span class="in-back"><p class="inner-p">2</p></span>
-            <span class="in-left"><p class="inner-p">3</p></span>
-            <span class="in-right"><p class="inner-p">4</p></span>
-            <span class="in-top"><p class="inner-p">5</p></span>
-            <span class="in-bottom"><p class="inner-p">6</p></span>
-      </div>
-</div>
+	<div id="content">
+		<div class="front">前面</div>
+		<div class="back">后面</div>
+		<div class="left">左边</div>
+		<div class="right">右边</div>
+		<div class="top">上面</div>
+		<div class="bottom">下面</div>
+	</div>
+<script>
+window.onload = function(){
+		var oDiv = document.getElementById('content');
+
+		var x = 0;
+		var lastX = 0 ;
+		var speedX = 0;
+		
+		var y = 0;
+		var lastY = 0;
+		var speedY = 0;
+		var timer = null;
+
+		oDiv.onmousedown = function(ev){
+			clearInterval(timer)
+			disX = ev.clientX -y;  // 减去之前的位置
+			disY = ev.clientY -x;
+			document.onmousemove = function(ev){
+				clearInterval(timer);
+				y = ev.clientX  - disX; //y轴旋转
+				x = ev.clientY  - disY;  //x轴旋转
+
+				speedY = y -lastY; //速度
+				lastY = y ;
+
+				speedX = x -lastX;
+				lastX = x ;
+
+				oDiv.style.transform =  'perspective(800px) rotateX('+-x+'deg) rotateY('+y+'deg)';
+
+			};
+			document.onmouseup = function(){
+				clearInterval(timer);
+				document.onmousemove = null;
+				document.onmouseup = null;	
+
+				timer = setInterval(function(){
+					y += speedY;
+					x += speedX;
+					speedY*=0.95;  
+					speedX*=0.95; //摩擦
+					
+					if(Math.abs(speedY) < 1) speedY=0;
+					if(Math.abs(speedX) < 1) speedX=0;
+					if(Math.abs(speedY) ==0 && speedX ==0) clearInterval(timer)
+
+					oDiv.style.transform =  'perspective(800px) rotateX('+-x+'deg) rotateY('+y+'deg)';
+					console.log('x-'+x ,  'y-'+y)
+				},30)
+			};
+			
+			return false;	
+		};	
+
+	}
+</script>
 </body>
 </html>
